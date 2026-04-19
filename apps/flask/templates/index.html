@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Message Logger</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 0 20px; }
+    input[type="text"] { width: 100%; padding: 8px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; margin-bottom: 10px; }
+    button { padding: 8px 20px; font-size: 16px; background: #0070f3; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    ul { padding-left: 20px; }
+    li { margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <h1>Message Logger</h1>
+
+  <form method="POST" action="/">
+    <label for="message"><strong>Message:</strong></label><br/>
+    <input id="message" name="message" type="text" placeholder="Enter your message..." required />
+    <button type="submit">Submit</button>
+  </form>
+
+  <h2>Logged Messages</h2>
+  {% if messages %}
+    <ul>
+      {% for msg in messages %}
+        <li>{{ msg }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p style="color:#666">No messages yet.</p>
+  {% endif %}
+</body>
+</html>

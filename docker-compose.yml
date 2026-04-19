@@ -1,0 +1,41 @@
+services:
+  nextjs:
+    build: ./apps/nextjs
+    ports:
+      - "3000:3000"
+    volumes:
+      - nextjs_data:/data
+    environment:
+      LOG_FILE: /data/message_log.txt
+
+  flask:
+    build: ./apps/flask
+    ports:
+      - "5000:5000"
+    volumes:
+      - flask_data:/data
+    environment:
+      LOG_FILE: /data/message_log.txt
+
+  php-fpm:
+    build: ./apps/php
+    volumes:
+      - php_data:/data
+    environment:
+      LOG_FILE: /data/message_log.txt
+
+  php-nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./apps/php/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./apps/php/public:/var/www/html/public:ro
+      - ./apps/php/api:/var/www/html/api:ro
+    depends_on:
+      - php-fpm
+
+volumes:
+  nextjs_data:
+  flask_data:
+  php_data:
